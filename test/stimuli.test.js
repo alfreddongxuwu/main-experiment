@@ -1,0 +1,135 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {
+  CONDITIONS,
+  ITEMS,
+  QUDS,
+  RATING_TYPES,
+  UTTERANCE_TYPES,
+  conditionFromId,
+  emphasizeTryTo,
+  orderedRatingTypes,
+  ratingQuestion,
+  ratingStimulus,
+} from "../src/stimuli.js";
+
+test("the design has two items and 48 total preview conditions", () => {
+  assert.deepEqual(ITEMS.map((item) => item.id), ["photo", "package"]);
+  assert.equal(CONDITIONS.length, 48);
+  assert.equal(CONDITIONS.filter((condition) => condition.item === "photo").length, 24);
+  assert.equal(CONDITIONS.filter((condition) => condition.item === "package").length, 24);
+});
+
+test("condition ids are local within item and global across both items", () => {
+  assert.deepEqual(
+    CONDITIONS.filter((condition) => condition.item === "photo").map(
+      (condition) => condition.local_condition_id,
+    ),
+    [...Array(24).keys()],
+  );
+  assert.deepEqual(
+    CONDITIONS.filter((condition) => condition.item === "package").map(
+      (condition) => condition.local_condition_id,
+    ),
+    [...Array(24).keys()],
+  );
+  assert.deepEqual(
+    CONDITIONS.map((condition) => condition.global_condition_id),
+    [...Array(48).keys()],
+  );
+});
+
+test("condition query ids can lock the 24 photo preview conditions", () => {
+  for (let id = 0; id < 24; id += 1) {
+    const condition = conditionFromId(String(id));
+
+    assert.equal(condition.global_condition_id, id);
+    assert.equal(condition.item, "photo");
+  }
+
+  assert.equal(conditionFromId("not-a-number"), undefined);
+  assert.equal(conditionFromId(""), undefined);
+});
+
+test("the QUD values use the requested short labels", () => {
+  assert.deepEqual(QUDS, ["P?", "TRY?"]);
+});
+
+test("the utterance set excludes try and not-try controls", () => {
+  assert.deepEqual(
+    UTTERANCE_TYPES.map((utterance) => utterance.id),
+    ["managed", "didnt_manage", "failed", "didnt_fail", "did", "didnt"],
+  );
+});
+
+test("only manage and fail utterances are marked implicative", () => {
+  const implicativeById = Object.fromEntries(
+    UTTERANCE_TYPES.map((utterance) => [utterance.id, utterance.isImplicative]),
+  );
+
+  assert.deepEqual(implicativeById, {
+    managed: true,
+    didnt_manage: true,
+    failed: true,
+    didnt_fail: true,
+    did: false,
+    didnt: false,
+  });
+});
+
+test("rating order randomizes the first two questions and fixes naturalness last", () => {
+  assert.deepEqual(RATING_TYPES, ["P?", "TRY?", "NAT"]);
+  assert.deepEqual(orderedRatingTypes((values) => [...values].reverse()), ["TRY?", "P?", "NAT"]);
+});
+
+test("the TRY question is the only rating question with tried to emphasis", () => {
+  const condition = CONDITIONS.find(
+    (candidate) => candidate.item === "photo" && candidate.qud === "TRY?",
+  );
+
+  assert.match(emphasizeTryTo(ratingQuestion(condition, "TRY?")), /<strong>tried to<\/strong>/);
+  assert.doesNotMatch(ratingQuestion(condition, "P?"), /<strong>|tried to|try to/);
+  assert.doesNotMatch(ratingQuestion(condition, "NAT"), /<strong>|tried to|try to/);
+});
+
+test("the rating text contains prior paragraph, QUD paragraph, and target answer", () => {
+  const condition = CONDITIONS.find(
+    (candidate) =>
+      candidate.item === "package" &&
+      candidate.prior === "low" &&
+      candidate.qud === "TRY?" &&
+      candidate.utterance_id === "didnt_fail",
+  );
+  const stimulus = ratingStimulus(condition);
+
+  assert.match(stimulus, /Catherine had recently received a message/);
+  assert.match(stimulus, /She told her two roommates that she was not planning/);
+  assert.match(stimulus, /wondered whether Catherine had TRIED TO pick it up/);
+  assert.match(stimulus, /He asked the other roommate whether Catherine had TRIED TO pick up the package/);
+  assert.match(
+    stimulus,
+    /The roommate answered: <em>&quot;Catherine didn&#039;t fail to pick up the package\.&quot;<\/em>/,
+  );
+});
+
+test("prior and QUD paragraphs are independently recombined from the stimuli files", () => {
+  const highTryPhoto = CONDITIONS.find(
+    (condition) =>
+      condition.item === "photo" &&
+      condition.prior === "high" &&
+      condition.qud === "TRY?" &&
+      condition.utterance_id === "managed",
+  );
+  const lowPPhoto = CONDITIONS.find(
+    (condition) =>
+      condition.item === "photo" &&
+      condition.prior === "low" &&
+      condition.qud === "P?" &&
+      condition.utterance_id === "managed",
+  );
+
+  assert.match(highTryPhoto.prior_text, /he was planning to put it up soon/);
+  assert.match(highTryPhoto.qud_text, /wondered whether Alfred had TRIED TO put it up/);
+  assert.match(lowPPhoto.prior_text, /he was not planning to put it up soon/);
+  assert.match(lowPPhoto.qud_text, /wondered whether Alfred had put it up/);
+});
