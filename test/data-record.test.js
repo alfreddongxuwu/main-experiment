@@ -9,6 +9,7 @@ test("raw jsPsych trials are reduced to one main-experiment preview record", () 
     study_version: "main-experiment-preview-1.0.0",
     collection_mode: "preview",
     assignment_source: "local-random-preview",
+    item_route: null,
     local_condition_id: 7,
     global_condition_id: 31,
     item: "package",

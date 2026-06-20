@@ -137,18 +137,26 @@ export function emphasizeTryTo(value) {
   return escapeHtml(value).replace(/\b(?:try|tried) to\b/gi, (match) => `<strong>${match}</strong>`);
 }
 
-export function randomCondition() {
-  return CONDITIONS[Math.floor(Math.random() * CONDITIONS.length)];
+export function conditionsForItem(itemId) {
+  return CONDITIONS.filter((condition) => condition.item === itemId);
 }
 
-export function conditionFromId(rawId) {
+export function randomCondition(itemId) {
+  const pool = itemId ? conditionsForItem(itemId) : CONDITIONS;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+export function conditionFromId(rawId, itemId) {
   if (rawId === null || rawId === undefined || rawId === "") {
     return undefined;
   }
 
   const id = Number(rawId);
+  const pool = itemId ? conditionsForItem(itemId) : CONDITIONS;
+  const idKey = itemId ? "local_condition_id" : "global_condition_id";
+
   return Number.isInteger(id)
-    ? CONDITIONS.find((condition) => condition.global_condition_id === id)
+    ? pool.find((condition) => condition[idKey] === id)
     : undefined;
 }
 

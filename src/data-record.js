@@ -19,6 +19,7 @@ export function buildParticipantRecord(trials) {
     prolific_study_id: null,
     prolific_session_id: null,
     assignment_source: metadata.assignment_source ?? null,
+    item_route: metadata.item_route ?? null,
     local_condition_id: metadata.local_condition_id ?? null,
     global_condition_id: metadata.global_condition_id ?? null,
     item: metadata.item ?? null,

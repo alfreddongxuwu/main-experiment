@@ -7,6 +7,7 @@ import {
   RATING_TYPES,
   UTTERANCE_TYPES,
   conditionFromId,
+  conditionsForItem,
   emphasizeTryTo,
   orderedRatingTypes,
   ratingQuestion,
@@ -21,6 +22,9 @@ test("the design has two items and 48 total preview conditions", () => {
 });
 
 test("condition ids are local within item and global across both items", () => {
+  assert.equal(conditionsForItem("photo").length, 24);
+  assert.equal(conditionsForItem("package").length, 24);
+
   assert.deepEqual(
     CONDITIONS.filter((condition) => condition.item === "photo").map(
       (condition) => condition.local_condition_id,
@@ -41,7 +45,7 @@ test("condition ids are local within item and global across both items", () => {
 
 test("condition query ids can lock the 24 photo preview conditions", () => {
   for (let id = 0; id < 24; id += 1) {
-    const condition = conditionFromId(String(id));
+    const condition = conditionFromId(String(id), "photo");
 
     assert.equal(condition.global_condition_id, id);
     assert.equal(condition.item, "photo");
@@ -49,6 +53,20 @@ test("condition query ids can lock the 24 photo preview conditions", () => {
 
   assert.equal(conditionFromId("not-a-number"), undefined);
   assert.equal(conditionFromId(""), undefined);
+});
+
+test("item routes scope condition query ids locally", () => {
+  for (let id = 0; id < 24; id += 1) {
+    const condition = conditionFromId(String(id), "package");
+
+    assert.equal(condition.local_condition_id, id);
+    assert.equal(condition.global_condition_id, id + 24);
+    assert.equal(condition.item, "package");
+  }
+
+  assert.equal(conditionFromId("24", "photo"), undefined);
+  assert.equal(conditionFromId("24", "package"), undefined);
+  assert.equal(conditionFromId("24").item, "package");
 });
 
 test("the QUD values use the requested short labels", () => {

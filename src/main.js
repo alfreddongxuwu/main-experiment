@@ -5,12 +5,11 @@ import "jspsych/css/jspsych.css";
 import "./styles.css";
 import ThreeSliderResponsePlugin from "./plugins/three-slider-response.js";
 import { buildParticipantRecord } from "./data-record.js";
+import { previewAssignmentFromLocation } from "./routing.js";
 import {
-  conditionFromId,
   emphasizeTryTo,
   escapeHtml,
   orderedRatingTypes,
-  randomCondition,
   ratingEndpoints,
   ratingQuestion,
   ratingStimulus,
@@ -19,10 +18,9 @@ import {
 const STUDY_VERSION = "main-experiment-preview-1.0.0";
 const PROLIFIC_PREVIEW_URL = "https://www.prolific.com/";
 const root = document.querySelector("#experiment-root");
-const query = new URLSearchParams(window.location.search);
-const forcedCondition = conditionFromId(query.get("condition"));
-const selectedCondition = forcedCondition ?? randomCondition();
-const assignmentSource = forcedCondition ? "url-forced-preview" : "local-random-preview";
+const { selectedCondition, itemRoute, assignmentSource } = previewAssignmentFromLocation(
+  window.location,
+);
 let consentGiven = false;
 
 const jsPsych = initJsPsych({
@@ -84,6 +82,7 @@ jsPsych.data.addProperties({
   prolific_study_id: null,
   prolific_session_id: null,
   assignment_source: assignmentSource,
+  item_route: itemRoute,
   local_condition_id: selectedCondition.local_condition_id,
   global_condition_id: selectedCondition.global_condition_id,
   item: selectedCondition.item,
