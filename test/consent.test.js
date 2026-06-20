@@ -103,8 +103,28 @@ test("demographics page matches the norming demographics page except for quote s
   assert.equal(demographicsButtonLabel(mainSource), demographicsButtonLabel(normingSource));
 });
 
+test("demographics validation follows the norming required-field behavior", () => {
+  assert.match(mainSource, /const fields = \[\.\.\.form\.querySelectorAll\("\[required\]"\)\]/);
+  assert.match(mainSource, /form\.noValidate = true/);
+  assert.match(mainSource, /field\.value\.trim\(\) === ""/);
+  assert.match(mainSource, /Please enter your age in years\./);
+  assert.match(mainSource, /Please enter an age between 18 and 120\./);
+  assert.match(mainSource, /Please select an option\./);
+  assert.match(mainSource, /field\.toggleAttribute\("aria-invalid", message !== ""\)/);
+  assert.match(mainSource, /field\.addEventListener\(eventName, \(\) => renderValidation\(field\)\)/);
+  assert.match(mainSource, /event\.stopImmediatePropagation\(\)/);
+  assert.match(mainSource, /invalidFields\[0\]\.focus\(\)/);
+});
+
 test("completion page uses the norming completion text", () => {
   assert.match(mainSource, /Thank you for completing this study\. Your response has been recorded\./);
   assert.match(mainSource, /You should be redirected to Prolific automatically\./);
   assert.match(mainSource, /Return to Prolific/);
+});
+
+test("preview completion automatically redirects to Prolific", () => {
+  assert.match(mainSource, /PROLIFIC_PREVIEW_URL\s*=\s*"https:\/\/www\.prolific\.com\/"/);
+  assert.match(mainSource, /PROLIFIC_REDIRECT_DELAY_MS\s*=\s*1200/);
+  assert.match(mainSource, /scheduleProlificRedirect\(\)/);
+  assert.match(mainSource, /window\.location\.assign\(PROLIFIC_PREVIEW_URL\)/);
 });

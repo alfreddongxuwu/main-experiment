@@ -17,6 +17,7 @@ import {
 
 const STUDY_VERSION = "main-experiment-preview-1.0.0";
 const PROLIFIC_PREVIEW_URL = "https://www.prolific.com/";
+const PROLIFIC_REDIRECT_DELAY_MS = 1200;
 const root = document.querySelector("#experiment-root");
 const { selectedCondition, itemRoute, assignmentSource } = previewAssignmentFromLocation(
   window.location,
@@ -52,6 +53,7 @@ const jsPsych = initJsPsych({
     `;
 
     if (consentGiven) {
+      scheduleProlificRedirect();
       console.info(
         "Preview data (not uploaded)",
         buildParticipantRecord(jsPsych.data.get().values()),
@@ -231,62 +233,60 @@ const demographics = {
   data: { trial_kind: "demographics" },
   on_load: () => {
     const form = document.querySelector("#jspsych-survey-html-form");
+    const fields = [...form.querySelectorAll("[required]")];
+
     form.noValidate = true;
 
-    const fields = [...form.querySelectorAll("input, select")];
-    const errors = Object.fromEntries(
-      [...form.querySelectorAll("[data-error-for]")].map((element) => [
-        element.dataset.errorFor,
-        element,
-      ]),
-    );
-
-    form.addEventListener("submit", (event) => {
-      let firstInvalidField;
-
-      for (const field of fields) {
-        const message = validationMessage(field);
-        field.setAttribute("aria-invalid", message ? "true" : "false");
-        errors[field.name].textContent = message;
-
-        if (message && !firstInvalidField) {
-          firstInvalidField = field;
+    const validationMessage = (field) => {
+      if (field.name === "age") {
+        if (field.value.trim() === "") {
+          return "Please enter your age in years.";
         }
+
+        const age = Number(field.value);
+        if (!Number.isFinite(age) || age < 18 || age > 120) {
+          return "Please enter an age between 18 and 120.";
+        }
+
+        return "";
       }
 
-      if (firstInvalidField) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        firstInvalidField.focus();
-      }
-    }, true);
+      return field.value === "" ? "Please select an option." : "";
+    };
+
+    const renderValidation = (field) => {
+      const message = validationMessage(field);
+      const error = form.querySelector(`[data-error-for="${field.name}"]`);
+      error.textContent = message;
+      field.toggleAttribute("aria-invalid", message !== "");
+      return message === "";
+    };
 
     for (const field of fields) {
-      field.addEventListener("input", () => clearFieldError(field, errors));
-      field.addEventListener("change", () => clearFieldError(field, errors));
+      const eventName = field.tagName === "SELECT" ? "change" : "input";
+      field.addEventListener(eventName, () => renderValidation(field));
     }
+
+    form.addEventListener(
+      "submit",
+      (event) => {
+        const invalidFields = fields.filter((field) => !renderValidation(field));
+
+        if (invalidFields.length > 0) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          invalidFields[0].focus();
+        }
+      },
+      true,
+    );
   },
 };
 
-function validationMessage(field) {
-  if (!field.value) {
-    return field.name === "age" ? "Please enter your age in years." : "Please select an option.";
-  }
-
-  if (field.name === "age") {
-    const age = Number(field.value);
-
-    if (!Number.isInteger(age) || age < 18 || age > 120) {
-      return "Please enter an age between 18 and 120.";
-    }
-  }
-
-  return "";
-}
-
-function clearFieldError(field, errors) {
-  field.setAttribute("aria-invalid", "false");
-  errors[field.name].textContent = "";
+function scheduleProlificRedirect() {
+  window.setTimeout(() => {
+    window.location.assign(PROLIFIC_PREVIEW_URL);
+  }, PROLIFIC_REDIRECT_DELAY_MS);
 }
 
 jsPsych.run([consent, instructions, ratings, demographics]);
