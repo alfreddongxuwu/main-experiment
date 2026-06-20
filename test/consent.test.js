@@ -66,15 +66,19 @@ test("consent text matches the norming consent text except for quote style", () 
   assert.equal(normalizedHtml(consentStimulus(mainSource)), normalizedHtml(consentStimulus(normingSource)));
 });
 
-test("instructions text matches the norming instructions text", () => {
+test("instructions text matches norming except for the three-slider wording", () => {
+  const mainInstructions = normalizedHtml(instructionsStimulus(mainSource));
+
+  assert.match(mainInstructions, /three slider questions/);
+
   if (!normingSource) {
-    assert.match(instructionsStimulus(mainSource), /You will read one short description/);
-    assert.match(instructionsStimulus(mainSource), /respond based <strong>only<\/strong>/);
+    assert.match(mainInstructions, /You will read one short description/);
+    assert.match(mainInstructions, /respond based <strong>only<\/strong>/);
     return;
   }
 
   assert.equal(
-    normalizedHtml(instructionsStimulus(mainSource)),
+    mainInstructions.replace("three slider questions", "two questions using sliders"),
     normalizedHtml(instructionsStimulus(normingSource)),
   );
 });
