@@ -11,6 +11,7 @@ import {
   emphasizeTryTo,
   orderedRatingTypes,
   ratingQuestion,
+  ratingEndpoints,
   ratingStimulus,
 } from "../src/stimuli.js";
 
@@ -98,6 +99,12 @@ test("only manage and fail utterances are marked implicative", () => {
 test("rating order randomizes the first two questions and fixes naturalness last", () => {
   assert.deepEqual(RATING_TYPES, ["P?", "TRY?", "NAT"]);
   assert.deepEqual(orderedRatingTypes((values) => [...values].reverse()), ["TRY?", "P?", "NAT"]);
+});
+
+test("slider endpoints use lowercase labels", () => {
+  assert.deepEqual(ratingEndpoints("P?"), ["very unlikely", "very likely"]);
+  assert.deepEqual(ratingEndpoints("TRY?"), ["very unlikely", "very likely"]);
+  assert.deepEqual(ratingEndpoints("NAT"), ["very unnatural", "very natural"]);
 });
 
 test("the TRY question is the only rating question with tried to emphasis", () => {

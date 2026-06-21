@@ -178,7 +178,7 @@ export function ratingQuestion(condition, ratingType) {
 
 export function ratingEndpoints(ratingType) {
   return ratingType === "NAT"
-    ? ["Very unnatural", "Very natural"]
+    ? ["very unnatural", "very natural"]
     : ["very unlikely", "very likely"];
 }
 
