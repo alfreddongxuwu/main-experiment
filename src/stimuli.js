@@ -179,7 +179,7 @@ export function ratingQuestion(condition, ratingType) {
 export function ratingEndpoints(ratingType) {
   return ratingType === "NAT"
     ? ["Very unnatural", "Very natural"]
-    : ["Very unlikely", "Very likely"];
+    : ["very unlikely", "very likely"];
 }
 
 export function orderedRatingTypes(shuffle) {
