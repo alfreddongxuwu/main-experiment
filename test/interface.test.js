@@ -21,6 +21,12 @@ test("the rating page makes the text bold but leaves question text regular", () 
   assert.match(stylesSource, /\.scenario-text em\s*\{[\s\S]*?font-style:\s*italic/);
 });
 
+test("slider endpoint labels are bold", () => {
+  const labelRule = stylesSource.match(/\.slider-end-labels\s*\{([^}]*)\}/)?.[1];
+
+  assert.match(labelRule, /font-weight:\s*700/);
+});
+
 test("all three sliders must be moved before submission", () => {
   assert.match(pluginSource, /disabled/);
   assert.match(pluginSource, /moved\.size === inputs\.length/);
