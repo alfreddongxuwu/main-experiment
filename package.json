@@ -10,6 +10,7 @@
     "test": "node --test"
   },
   "dependencies": {
+    "@jspsych-contrib/plugin-pipe": "0.6.0",
     "@jspsych/plugin-html-button-response": "2.1.0",
     "@jspsych/plugin-survey-html-form": "2.1.0",
     "jspsych": "8.2.3"

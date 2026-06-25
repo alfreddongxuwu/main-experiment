@@ -15,37 +15,37 @@ import {
   ratingStimulus,
 } from "../src/stimuli.js";
 
-test("the design has two items and 48 total preview conditions", () => {
+test("the design has two items and 64 total preview conditions", () => {
   assert.deepEqual(ITEMS.map((item) => item.id), ["photo", "package"]);
-  assert.equal(CONDITIONS.length, 48);
-  assert.equal(CONDITIONS.filter((condition) => condition.item === "photo").length, 24);
-  assert.equal(CONDITIONS.filter((condition) => condition.item === "package").length, 24);
+  assert.equal(CONDITIONS.length, 64);
+  assert.equal(CONDITIONS.filter((condition) => condition.item === "photo").length, 32);
+  assert.equal(CONDITIONS.filter((condition) => condition.item === "package").length, 32);
 });
 
 test("condition ids are local within item and global across both items", () => {
-  assert.equal(conditionsForItem("photo").length, 24);
-  assert.equal(conditionsForItem("package").length, 24);
+  assert.equal(conditionsForItem("photo").length, 32);
+  assert.equal(conditionsForItem("package").length, 32);
 
   assert.deepEqual(
     CONDITIONS.filter((condition) => condition.item === "photo").map(
       (condition) => condition.local_condition_id,
     ),
-    [...Array(24).keys()],
+    [...Array(32).keys()],
   );
   assert.deepEqual(
     CONDITIONS.filter((condition) => condition.item === "package").map(
       (condition) => condition.local_condition_id,
     ),
-    [...Array(24).keys()],
+    [...Array(32).keys()],
   );
   assert.deepEqual(
     CONDITIONS.map((condition) => condition.global_condition_id),
-    [...Array(48).keys()],
+    [...Array(64).keys()],
   );
 });
 
-test("condition query ids can lock the 24 photo preview conditions", () => {
-  for (let id = 0; id < 24; id += 1) {
+test("condition query ids can lock the 32 photo preview conditions", () => {
+  for (let id = 0; id < 32; id += 1) {
     const condition = conditionFromId(String(id), "photo");
 
     assert.equal(condition.global_condition_id, id);
@@ -57,27 +57,27 @@ test("condition query ids can lock the 24 photo preview conditions", () => {
 });
 
 test("item routes scope condition query ids locally", () => {
-  for (let id = 0; id < 24; id += 1) {
+  for (let id = 0; id < 32; id += 1) {
     const condition = conditionFromId(String(id), "package");
 
     assert.equal(condition.local_condition_id, id);
-    assert.equal(condition.global_condition_id, id + 24);
+    assert.equal(condition.global_condition_id, id + 32);
     assert.equal(condition.item, "package");
   }
 
-  assert.equal(conditionFromId("24", "photo"), undefined);
-  assert.equal(conditionFromId("24", "package"), undefined);
-  assert.equal(conditionFromId("24").item, "package");
+  assert.equal(conditionFromId("32", "photo"), undefined);
+  assert.equal(conditionFromId("32", "package"), undefined);
+  assert.equal(conditionFromId("32").item, "package");
 });
 
 test("the QUD values use the requested short labels", () => {
   assert.deepEqual(QUDS, ["P?", "TRY?"]);
 });
 
-test("the utterance set excludes try and not-try controls", () => {
+test("the utterance set includes try and not-try controls", () => {
   assert.deepEqual(
     UTTERANCE_TYPES.map((utterance) => utterance.id),
-    ["managed", "didnt_manage", "failed", "didnt_fail", "did", "didnt"],
+    ["managed", "didnt_manage", "failed", "didnt_fail", "did", "didnt", "tried", "didnt_try"],
   );
 });
 
@@ -93,6 +93,8 @@ test("only manage and fail utterances are marked implicative", () => {
     didnt_fail: true,
     did: false,
     didnt: false,
+    tried: false,
+    didnt_try: false,
   });
 });
 

@@ -21,7 +21,7 @@ export const ITEMS = Object.freeze([
   },
   {
     id: "package",
-    globalOffset: 24,
+    globalOffset: 32,
     protagonist: "Catherine",
     object: "package",
     action: "pick up the package",
@@ -86,6 +86,20 @@ export const UTTERANCE_TYPES = Object.freeze([
     polarity: "negative",
     isImplicative: false,
     text: ({ protagonist, action }) => `${protagonist} didn't ${action}.`,
+  },
+  {
+    id: "tried",
+    family: "try",
+    polarity: "positive",
+    isImplicative: false,
+    text: ({ protagonist, action }) => protagonist + " tried to " + action + ".",
+  },
+  {
+    id: "didnt_try",
+    family: "try",
+    polarity: "negative",
+    isImplicative: false,
+    text: ({ protagonist, action }) => protagonist + " didn" + String.fromCharCode(39) + "t try to " + action + ".",
   },
 ]);
 

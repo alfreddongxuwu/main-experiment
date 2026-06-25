@@ -122,9 +122,21 @@ test("completion page uses the norming completion text", () => {
   assert.match(mainSource, /Return to Prolific/);
 });
 
-test("preview completion automatically redirects to Prolific", () => {
+test("completion screens redirect to the matching Prolific target", () => {
+  assert.match(
+    mainSource,
+    /PROLIFIC_COMPLETION_URL[\s\S]*?"https:\/\/app\.prolific\.com\/submissions\/complete\?cc=C1MDRYG9"/,
+  );
   assert.match(mainSource, /PROLIFIC_PREVIEW_URL\s*=\s*"https:\/\/www\.prolific\.com\/"/);
   assert.match(mainSource, /PROLIFIC_REDIRECT_DELAY_MS\s*=\s*1200/);
-  assert.match(mainSource, /scheduleProlificRedirect\(\)/);
-  assert.match(mainSource, /window\.location\.assign\(PROLIFIC_PREVIEW_URL\)/);
+  assert.match(mainSource, /isDataCollectionSession \? PROLIFIC_COMPLETION_URL : PROLIFIC_PREVIEW_URL/);
+  assert.match(mainSource, /window\.location\.assign\(prolificReturnUrl\(\)\)/);
+});
+
+test("data saving is restricted to complete Prolific sessions", () => {
+  assert.match(mainSource, /isCompleteProlificSession\(prolific\)/);
+  assert.match(mainSource, /conditional_function: \(\) => isDataCollectionSession/);
+  assert.match(mainSource, /collection_mode: isDataCollectionSession \? "main" : "preview"/);
+  assert.match(mainSource, /JSON\.stringify\(buildParticipantRecord/);
+  assert.match(mainSource, /Saving your responses\. Please do not close this page\./);
 });

@@ -26,7 +26,7 @@ test("condition query ids are local inside item routes", () => {
 
   assert.equal(packageItem.selectedCondition.item, "package");
   assert.equal(packageItem.selectedCondition.local_condition_id, 0);
-  assert.equal(packageItem.selectedCondition.global_condition_id, 24);
+  assert.equal(packageItem.selectedCondition.global_condition_id, 32);
   assert.equal(packageItem.itemRoute, "package");
   assert.equal(packageItem.assignmentSource, "url-forced-package-preview");
 });
