@@ -105,7 +105,7 @@ export const UTTERANCE_TYPES = Object.freeze([
 
 export const RATING_TYPES = Object.freeze(["P?", "TRY?", "NAT"]);
 export const ANSWER_ASSUMPTION_TEXT =
-  "Assume that the roommate's answer is sincere and accurate.";
+  "* Assume that the roommate's answer is sincere and accurate.";
 
 export const CONDITIONS = Object.freeze(
   ITEMS.flatMap((item) =>

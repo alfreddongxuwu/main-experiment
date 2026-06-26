@@ -139,7 +139,7 @@ test("the rating text contains prior paragraph, QUD paragraph, and target answer
     stimulus,
     /The roommate answered: <em>&quot;Catherine didn&#039;t fail to pick up the package\.&quot;<\/em>/,
   );
-  assert.match(stimulus, new RegExp(escapeHtml(ANSWER_ASSUMPTION_TEXT)));
+  assert.ok(stimulus.includes(escapeHtml(ANSWER_ASSUMPTION_TEXT)));
 });
 
 test("prior and QUD paragraphs are independently recombined from the stimuli files", () => {
