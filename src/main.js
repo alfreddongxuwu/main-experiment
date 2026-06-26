@@ -33,6 +33,7 @@ import {
 } from "./stimuli.js";
 
 const STUDY_VERSION_PREFIX = "main-experiment";
+const STUDY_VERSION = "1.1.0";
 const SESSION_STORAGE_KEY = "main-experiment-session-v1";
 const LOCAL_STORAGE_KEY_PREFIX = "main-experiment-session-v1:";
 const PROLIFIC_COMPLETION_URL =
@@ -583,7 +584,9 @@ function runExperiment() {
 }
 
 function studyVersion(route) {
-  return route ? `${STUDY_VERSION_PREFIX}-${route}-1.0.0` : `${STUDY_VERSION_PREFIX}-preview-1.0.0`;
+  return route
+    ? `${STUDY_VERSION_PREFIX}-${route}-${STUDY_VERSION}`
+    : `${STUDY_VERSION_PREFIX}-preview-${STUDY_VERSION}`;
 }
 
 function validRatingOrder(order) {

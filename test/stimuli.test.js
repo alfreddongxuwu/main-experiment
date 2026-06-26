@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  ANSWER_ASSUMPTION_TEXT,
   CONDITIONS,
   ITEMS,
   QUDS,
@@ -12,6 +13,7 @@ import {
   orderedRatingTypes,
   ratingQuestion,
   ratingEndpoints,
+  escapeHtml,
   ratingStimulus,
 } from "../src/stimuli.js";
 
@@ -137,6 +139,7 @@ test("the rating text contains prior paragraph, QUD paragraph, and target answer
     stimulus,
     /The roommate answered: <em>&quot;Catherine didn&#039;t fail to pick up the package\.&quot;<\/em>/,
   );
+  assert.match(stimulus, new RegExp(escapeHtml(ANSWER_ASSUMPTION_TEXT)));
 });
 
 test("prior and QUD paragraphs are independently recombined from the stimuli files", () => {

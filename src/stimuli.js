@@ -104,6 +104,8 @@ export const UTTERANCE_TYPES = Object.freeze([
 ]);
 
 export const RATING_TYPES = Object.freeze(["P?", "TRY?", "NAT"]);
+export const ANSWER_ASSUMPTION_TEXT =
+  "Assume that the roommate's answer is sincere and accurate.";
 
 export const CONDITIONS = Object.freeze(
   ITEMS.flatMap((item) =>
@@ -208,6 +210,7 @@ export function ratingStimulus(condition) {
         <p>${escapeHtml(condition.prior_text)}</p>
         <p>${escapeHtml(condition.qud_text)}</p>
         <p>The roommate answered: <em>&quot;${escapeHtml(condition.target_utterance)}&quot;</em></p>
+        <p>${escapeHtml(ANSWER_ASSUMPTION_TEXT)}</p>
       </div>
     </section>
   `;
