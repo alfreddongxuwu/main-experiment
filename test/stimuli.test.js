@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  ANSWER_ASSUMPTION_TEXT,
   CONDITIONS,
   ITEMS,
   QUDS,
@@ -134,12 +133,12 @@ test("the rating text contains prior paragraph, QUD paragraph, and target answer
   assert.match(stimulus, /Catherine had recently received a message/);
   assert.match(stimulus, /She told her two roommates that she was not planning/);
   assert.match(stimulus, /wondered whether Catherine had TRIED TO pick it up/);
-  assert.match(stimulus, /He asked the other roommate whether Catherine had TRIED TO pick up the package/);
+  assert.match(stimulus, /Alfred asked their other roommate, who usually knew what was going on around the apartment, whether Catherine had TRIED TO pick up the package/);
   assert.match(
     stimulus,
     /The roommate answered: <em>&quot;Catherine didn&#039;t fail to pick up the package\.&quot;<\/em>/,
   );
-  assert.ok(stimulus.includes(escapeHtml(ANSWER_ASSUMPTION_TEXT)));
+  assert.doesNotMatch(stimulus, /\* Assume/);
 });
 
 test("prior and QUD paragraphs are independently recombined from the stimuli files", () => {

@@ -14,9 +14,9 @@ export const ITEMS = Object.freeze([
     }),
     qud: Object.freeze({
       "P?":
-        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred had put it up. She asked the other roommate whether Alfred had put up the photo.",
+        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred had put it up. Catherine asked their other roommate, who usually knew what was going on around the apartment, whether Alfred had put up the photo.",
       "TRY?":
-        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred had TRIED TO put it up. She asked the other roommate whether Alfred had TRIED TO put up the photo.",
+        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred had TRIED TO put it up. Catherine asked their other roommate, who usually knew what was going on around the apartment, whether Alfred had TRIED TO put up the photo.",
     }),
   },
   {
@@ -34,9 +34,9 @@ export const ITEMS = Object.freeze([
     }),
     qud: Object.freeze({
       "P?":
-        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine had picked it up. He asked the other roommate whether Catherine had picked up the package.",
+        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine had picked it up. Alfred asked their other roommate, who usually knew what was going on around the apartment, whether Catherine had picked up the package.",
       "TRY?":
-        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine had TRIED TO pick it up. He asked the other roommate whether Catherine had TRIED TO pick up the package.",
+        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine had TRIED TO pick it up. Alfred asked their other roommate, who usually knew what was going on around the apartment, whether Catherine had TRIED TO pick up the package.",
     }),
   },
 ]);
@@ -104,8 +104,6 @@ export const UTTERANCE_TYPES = Object.freeze([
 ]);
 
 export const RATING_TYPES = Object.freeze(["P?", "TRY?", "NAT"]);
-export const ANSWER_ASSUMPTION_TEXT =
-  "* Assume that the roommate's answer is sincere and accurate.";
 
 export const CONDITIONS = Object.freeze(
   ITEMS.flatMap((item) =>
@@ -210,7 +208,6 @@ export function ratingStimulus(condition) {
         <p>${escapeHtml(condition.prior_text)}</p>
         <p>${escapeHtml(condition.qud_text)}</p>
         <p>The roommate answered: <em>&quot;${escapeHtml(condition.target_utterance)}&quot;</em></p>
-        <p>${escapeHtml(ANSWER_ASSUMPTION_TEXT)}</p>
       </div>
     </section>
   `;
