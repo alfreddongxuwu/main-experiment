@@ -132,8 +132,8 @@ test("the rating text contains prior paragraph, QUD paragraph, and target answer
 
   assert.match(stimulus, /Catherine had recently received a message/);
   assert.match(stimulus, /She told her two roommates that she was not planning/);
-  assert.match(stimulus, /wondered whether Catherine had TRIED TO pick it up/);
-  assert.match(stimulus, /He asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Catherine had TRIED TO pick up the package/);
+  assert.match(stimulus, /wondered whether Catherine TRIED TO pick it up/);
+  assert.match(stimulus, /He asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Catherine TRIED TO pick up the package/);
   assert.match(
     stimulus,
     /The roommate answered: <em>&quot;Catherine didn&#039;t fail to pick up the package\.&quot;<\/em>/,
@@ -158,7 +158,7 @@ test("prior and QUD paragraphs are independently recombined from the stimuli fil
   );
 
   assert.match(highTryPhoto.prior_text, /he was planning to put it up soon/);
-  assert.match(highTryPhoto.qud_text, /wondered whether Alfred had TRIED TO put it up/);
+  assert.match(highTryPhoto.qud_text, /wondered whether Alfred TRIED TO put it up/);
   assert.match(lowPPhoto.prior_text, /he was not planning to put it up soon/);
-  assert.match(lowPPhoto.qud_text, /wondered whether Alfred had put it up/);
+  assert.match(lowPPhoto.qud_text, /wondered whether Alfred put it up/);
 });

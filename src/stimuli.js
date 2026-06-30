@@ -14,9 +14,9 @@ export const ITEMS = Object.freeze([
     }),
     qud: Object.freeze({
       "P?":
-        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred had put it up. She asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Alfred had put up the photo.",
+        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred put it up. She asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Alfred put up the photo.",
       "TRY?":
-        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred had TRIED TO put it up. She asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Alfred had TRIED TO put up the photo.",
+        "Later, Alfred's roommate Catherine happened to think of the photo and wondered whether Alfred TRIED TO put it up. She asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Alfred TRIED TO put up the photo.",
     }),
   },
   {
@@ -34,9 +34,9 @@ export const ITEMS = Object.freeze([
     }),
     qud: Object.freeze({
       "P?":
-        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine had picked it up. He asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Catherine had picked up the package.",
+        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine picked it up. He asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Catherine picked up the package.",
       "TRY?":
-        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine had TRIED TO pick it up. He asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Catherine had TRIED TO pick up the package.",
+        "Later, Catherine's roommate Alfred happened to think of the package and wondered whether Catherine TRIED TO pick it up. He asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Catherine TRIED TO pick up the package.",
     }),
   },
 ]);
