@@ -133,7 +133,7 @@ test("the rating text contains prior paragraph, QUD paragraph, and target answer
   assert.match(stimulus, /Catherine had recently received a message/);
   assert.match(stimulus, /She told her two roommates that she was not planning/);
   assert.match(stimulus, /wondered whether Catherine TRIED TO pick it up/);
-  assert.match(stimulus, /He asked their other roommate, who worked from home and always knew what was going on around the apartment, whether Catherine TRIED TO pick up the package/);
+  assert.match(stimulus, /He asked their other roommate, who worked from home and knew what was going on around the apartment, whether Catherine TRIED TO pick up the package/);
   assert.match(
     stimulus,
     /The roommate answered: <em>&quot;Catherine didn&#039;t fail to pick up the package\.&quot;<\/em>/,
