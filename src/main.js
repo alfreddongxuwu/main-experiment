@@ -33,7 +33,7 @@ import {
 } from "./stimuli.js";
 
 const STUDY_VERSION_PREFIX = "main-experiment";
-const STUDY_VERSION = "1.1.0";
+const STUDY_VERSION = "1.2.0";
 const SESSION_STORAGE_KEY = "main-experiment-session-v1";
 const LOCAL_STORAGE_KEY_PREFIX = "main-experiment-session-v1:";
 const PROLIFIC_COMPLETION_URL =

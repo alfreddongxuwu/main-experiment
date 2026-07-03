@@ -15,8 +15,8 @@ import {
 } from "../src/data-collection.js";
 
 test("the photo DataPipe experiment ID is configured", () => {
-  assert.deepEqual(DATAPIPE_EXPERIMENT_IDS, { photo: "BDqAjcWofskI" });
-  assert.equal(dataPipeExperimentIdForItem("photo"), "BDqAjcWofskI");
+  assert.deepEqual(DATAPIPE_EXPERIMENT_IDS, { photo: "T1Y51YyrnrtO" });
+  assert.equal(dataPipeExperimentIdForItem("photo"), "T1Y51YyrnrtO");
   assert.equal(hasDataPipeExperimentForItem("photo"), true);
   assert.equal(hasDataPipeExperimentForItem("package"), false);
 });
