@@ -130,7 +130,7 @@ test("the rating text contains prior paragraph, QUD paragraph, and target answer
   );
   const stimulus = ratingStimulus(condition);
 
-  assert.match(stimulus, /Catherine had recently received a message/);
+  assert.match(stimulus, /Catherine recently received a message/);
   assert.match(stimulus, /She told her two roommates that she was not planning/);
   assert.match(stimulus, /wondered whether Catherine TRIED TO pick it up/);
   assert.match(stimulus, /He asked their other roommate, who was reliable and knew what actually happened, whether Catherine TRIED TO pick up the package/);

@@ -8,9 +8,9 @@ export const ITEMS = Object.freeze([
     completedAction: "put up the photo",
     prior: Object.freeze({
       high:
-        "Alfred had recently taken and printed a group photo of himself and his two roommates. He told his roommates that he was planning to put it up soon, and he had mentioned several times that putting it up was part of his current plan.",
+        "Alfred recently took and printed a group photo of himself and his two roommates. He told his roommates that he was planning to put it up soon, and he mentioned several times that putting it up was part of his current plan.",
       low:
-        "Alfred had recently taken and printed a group photo of himself and his two roommates. He told his roommates that he was not planning to put it up soon, and he had mentioned several times that putting it up was not part of his current plan.",
+        "Alfred recently took and printed a group photo of himself and his two roommates. He told his roommates that he was not planning to put it up soon, and he mentioned several times that putting it up was not part of his current plan.",
     }),
     qud: Object.freeze({
       "P?":
@@ -28,9 +28,9 @@ export const ITEMS = Object.freeze([
     completedAction: "picked up the package",
     prior: Object.freeze({
       high:
-        "Catherine had recently received a message saying that a package was waiting for her at the front desk. She told her two roommates that she was planning to pick it up soon, and she had mentioned several times that picking it up was part of her current plan.",
+        "Catherine recently received a message saying that a package was waiting for her at the front desk. She told her two roommates that she was planning to pick it up soon, and she mentioned several times that picking it up was part of her current plan.",
       low:
-        "Catherine had recently received a message saying that a package was waiting for her at the front desk. She told her two roommates that she was not planning to pick it up soon, and she had mentioned several times that picking it up was not part of her current plan.",
+        "Catherine recently received a message saying that a package was waiting for her at the front desk. She told her two roommates that she was not planning to pick it up soon, and she mentioned several times that picking it up was not part of her current plan.",
     }),
     qud: Object.freeze({
       "P?":
