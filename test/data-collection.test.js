@@ -14,11 +14,15 @@ import {
   submissionIdFromProlificParameters,
 } from "../src/data-collection.js";
 
-test("the photo DataPipe experiment ID is configured", () => {
-  assert.deepEqual(DATAPIPE_EXPERIMENT_IDS, { photo: "T1Y51YyrnrtO" });
+test("the item DataPipe experiment ID is configured", () => {
+  assert.deepEqual(DATAPIPE_EXPERIMENT_IDS, {
+    photo: "T1Y51YyrnrtO",
+    package: "4A1bwjSSm50T",
+  });
   assert.equal(dataPipeExperimentIdForItem("photo"), "T1Y51YyrnrtO");
   assert.equal(hasDataPipeExperimentForItem("photo"), true);
-  assert.equal(hasDataPipeExperimentForItem("package"), false);
+  assert.equal(dataPipeExperimentIdForItem("package"), "4A1bwjSSm50T");
+  assert.equal(hasDataPipeExperimentForItem("package"), true);
 });
 
 test("Prolific identifiers are read from the standard URL parameters", () => {

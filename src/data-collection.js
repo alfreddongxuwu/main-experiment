@@ -1,5 +1,6 @@
 export const DATAPIPE_EXPERIMENT_IDS = Object.freeze({
   photo: "T1Y51YyrnrtO",
+  package: "4A1bwjSSm50T",
 });
 
 export const PROLIFIC_PARAMETER_NAMES = Object.freeze([
