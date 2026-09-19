@@ -73,7 +73,7 @@ p {
 .question-text {
   display: block;
   margin-top: 1.75rem;
-  color: #101820;
+  color: #1F2933;
   font-size: var(--study-font-size);
   font-weight: 400;
   line-height: 1.55;
@@ -170,7 +170,7 @@ select:focus-visible,
   display: block;
   width: 100%;
   margin: 0;
-  accent-color: #1d4f76;
+  accent-color: #374151;
 }
 
 .slider-end-labels {
@@ -178,7 +178,7 @@ select:focus-visible,
   justify-content: space-between;
   width: 100%;
   margin-top: 0.55rem;
-  color: #273746;
+  color: #1F2933;
   font-size: var(--study-font-size);
   font-weight: 700;
 }
